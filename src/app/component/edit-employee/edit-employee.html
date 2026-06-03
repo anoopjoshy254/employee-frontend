@@ -1,0 +1,152 @@
+<div class="employee-container">
+  <div class="employee-card">
+    <div class="employee-header">
+      <h1>Edit Employee</h1>
+      <button type="button" class="back-btn" (click)="goBack()">← Back</button>
+    </div>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="employee-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName" class="form-label">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            class="form-control"
+            [class.is-invalid]="submitted && f['firstName']?.errors"
+            formControlName="firstName"
+            placeholder="Enter first name"
+          />
+          <div *ngIf="submitted && f['firstName']?.errors" class="error-message">
+            <span *ngIf="f['firstName']?.errors!['required']">First name is required</span>
+            <span *ngIf="f['firstName']?.errors!['minlength']">First name must be at least 2 characters</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            class="form-control"
+            [class.is-invalid]="submitted && f['lastName']?.errors"
+            formControlName="lastName"
+            placeholder="Enter last name"
+          />
+          <div *ngIf="submitted && f['lastName']?.errors" class="error-message">
+            <span *ngIf="f['lastName']?.errors!['required']">Last name is required</span>
+            <span *ngIf="f['lastName']?.errors!['minlength']">Last name must be at least 2 characters</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            [class.is-invalid]="submitted && f['email']?.errors"
+            formControlName="email"
+            placeholder="Enter email"
+          />
+          <div *ngIf="submitted && f['email']?.errors" class="error-message">
+            <span *ngIf="f['email']?.errors!['required']">Email is required</span>
+            <span *ngIf="f['email']?.errors!['email']">Please enter a valid email</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            class="form-control"
+            [class.is-invalid]="submitted && f['phone']?.errors"
+            formControlName="phone"
+            placeholder="Enter phone number"
+          />
+          <div *ngIf="submitted && f['phone']?.errors" class="error-message">
+            <span *ngIf="f['phone']?.errors!['required']">Phone is required</span>
+            <span *ngIf="f['phone']?.errors!['pattern']">Please enter a valid phone number</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="department" class="form-label">Department</label>
+          <select
+            id="department"
+            class="form-control"
+            [class.is-invalid]="submitted && f['department']?.errors"
+            formControlName="department"
+          >
+            <option value="">Select Department</option>
+            <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+          </select>
+          <div *ngIf="submitted && f['department']?.errors" class="error-message">
+            <span *ngIf="f['department']?.errors!['required']">Department is required</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="position" class="form-label">Position</label>
+          <input
+            type="text"
+            id="position"
+            class="form-control"
+            [class.is-invalid]="submitted && f['position']?.errors"
+            formControlName="position"
+            placeholder="Enter position"
+          />
+          <div *ngIf="submitted && f['position']?.errors" class="error-message">
+            <span *ngIf="f['position']?.errors!['required']">Position is required</span>
+            <span *ngIf="f['position']?.errors!['minlength']">Position must be at least 3 characters</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dateOfJoining" class="form-label">Date of Joining</label>
+          <input
+            type="date"
+            id="dateOfJoining"
+            class="form-control"
+            [class.is-invalid]="submitted && f['dateOfJoining']?.errors"
+            formControlName="dateOfJoining"
+          />
+          <div *ngIf="submitted && f['dateOfJoining']?.errors" class="error-message">
+            <span *ngIf="f['dateOfJoining']?.errors!['required']">Date of joining is required</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="salary" class="form-label">Salary</label>
+          <input
+            type="number"
+            id="salary"
+            class="form-control"
+            [class.is-invalid]="submitted && f['salary']?.errors"
+            formControlName="salary"
+            placeholder="Enter salary"
+          />
+          <div *ngIf="submitted && f['salary']?.errors" class="error-message">
+            <span *ngIf="f['salary']?.errors!['required']">Salary is required</span>
+            <span *ngIf="f['salary']?.errors!['min']">Salary must be greater than 0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          <span *ngIf="!loading">Update Employee</span>
+          <span *ngIf="loading">Updating...</span>
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="goBack()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

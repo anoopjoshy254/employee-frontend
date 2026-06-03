@@ -1,39 +1,40 @@
 <div class="home-container">
   <nav class="navbar">
     <div class="navbar-content">
-      <h2 class="app-title">Employee Portal</h2>
+      <h2 class="app-title">Employee Management System</h2>
       <button class="logout-btn" (click)="logout()">Logout</button>
     </div>
   </nav>
 
   <div class="home-content">
     <div class="welcome-card">
-      <h1>Welcome to Employee Portal!</h1>
-      <p class="welcome-message">You have successfully logged in. This is your dashboard.</p>
-      
+      <h1>Dashboard</h1>
+      <p class="welcome-message">Welcome to the Employee Management System</p>
+
+      <!-- Quick Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">{{ totalEmployees }}</div>
+          <div class="stat-label">Total Employees</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{{ totalDepartments }}</div>
+          <div class="stat-label">Departments</div>
+        </div>
+      </div>
+
+      <!-- Action Cards -->
       <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">👤</div>
-          <h3>Profile Management</h3>
-          <p>View and update your profile information</p>
+        <div class="feature-card" (click)="viewEmployees()">
+          <h3>View Employees</h3>
+          <p>Browse and manage all employees</p>
+          <button class="btn btn-primary">View All</button>
         </div>
-        
-        <div class="feature-card">
-          <div class="feature-icon">📊</div>
-          <h3>Dashboard</h3>
-          <p>Monitor your work and achievements</p>
-        </div>
-        
-        <div class="feature-card">
-          <div class="feature-icon">📅</div>
-          <h3>Leave Management</h3>
-          <p>Apply and track your leave requests</p>
-        </div>
-        
-        <div class="feature-card">
-          <div class="feature-icon">💼</div>
-          <h3>Projects</h3>
-          <p>View assigned projects and tasks</p>
+
+        <div class="feature-card" (click)="addEmployee()">
+          <h3>Add Employee</h3>
+          <p>Add a new employee to the system</p>
+          <button class="btn btn-primary">Add New</button>
         </div>
       </div>
     </div>
