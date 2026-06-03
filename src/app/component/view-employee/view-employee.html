@@ -1,0 +1,58 @@
+<div class="employees-container">
+  <div class="employees-header">
+    <div>
+      <h1>Employees</h1>
+      <p class="subtitle">Total: {{ employees.length }} employees</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-primary" (click)="addNew()">+ Add Employee</button>
+      <button class="btn btn-secondary" (click)="goBack()">← Back</button>
+    </div>
+  </div>
+
+  <div *ngIf="employees.length === 0" class="no-data">
+    <p>No employees found. <span (click)="addNew()" style="cursor: pointer; color: #2563eb; font-weight: 500;">Add one now</span></p>
+  </div>
+
+  <div *ngIf="employees.length > 0" class="employees-grid">
+    <div *ngFor="let employee of employees" class="employee-card">
+      <div class="card-header">
+        <h3>{{ employee.firstName }} {{ employee.lastName }}</h3>
+        <span class="department">{{ employee.department }}</span>
+      </div>
+
+      <div class="card-body">
+        <div class="info-row">
+          <span class="label">Position:</span>
+          <span class="value">{{ employee.position }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Email:</span>
+          <span class="value">{{ employee.email }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Phone:</span>
+          <span class="value">{{ employee.phone }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Joined:</span>
+          <span class="value">{{ employee.dateOfJoining | date: 'MMM dd, yyyy' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Salary:</span>
+          <span class="value">{{ employee.salary | currency }}</span>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn-icon btn-edit" (click)="editEmployee(employee.id)" title="Edit">
+          Edit
+        </button>
+        <button class="btn-icon btn-delete" (click)="deleteEmployee(employee.id)" title="Delete">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
