@@ -1,58 +1,62 @@
 <div class="employees-container">
+  
   <div class="employees-header">
     <div>
-      <h1>Employees</h1>
-      <p class="subtitle">Total: {{ employees.length }} employees</p>
+      <h1>Employee Directory</h1>
+      <p class="subtitle">Manage company team members and roles</p>
     </div>
     <div class="header-actions">
-      <button class="btn btn-primary" (click)="addNew()">+ Add Employee</button>
-      <button class="btn btn-secondary" (click)="goBack()">← Back</button>
+      <button class="btn btn-secondary" (click)="goBack()">
+        ← Back to Home
+      </button>
+      <button class="btn btn-primary" (click)="addNew()">
+        + Add Employee
+      </button>
     </div>
   </div>
 
-  <div *ngIf="employees.length === 0" class="no-data">
-    <p>No employees found. <span (click)="addNew()" style="cursor: pointer; color: #2563eb; font-weight: 500;">Add one now</span></p>
+  <div class="no-data" *ngIf="loading">
+    <p>Fetching employee records from server...</p>
   </div>
 
-  <div *ngIf="employees.length > 0" class="employees-grid">
-    <div *ngFor="let employee of employees" class="employee-card">
+  <div class="employees-grid" *ngIf="!loading && employees && employees.length > 0">
+    
+    <div class="employee-card" *ngFor="let emp of employees">
+      
       <div class="card-header">
-        <h3>{{ employee.firstName }} {{ employee.lastName }}</h3>
-        <span class="department">{{ employee.department }}</span>
+        <h3>{{ emp.firstName }} {{ emp.lastName }}</h3>
+        <span class="department">ID: #{{ emp.id }}</span>
       </div>
 
       <div class="card-body">
         <div class="info-row">
-          <span class="label">Position:</span>
-          <span class="value">{{ employee.position }}</span>
+          <span class="label">First Name:</span>
+          <span class="value">{{ emp.firstName }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Last Name:</span>
+          <span class="value">{{ emp.lastName }}</span>
         </div>
         <div class="info-row">
           <span class="label">Email:</span>
-          <span class="value">{{ employee.email }}</span>
-        </div>
-        <div class="info-row">
-          <span class="label">Phone:</span>
-          <span class="value">{{ employee.phone }}</span>
-        </div>
-        <div class="info-row">
-          <span class="label">Joined:</span>
-          <span class="value">{{ employee.dateOfJoining | date: 'MMM dd, yyyy' }}</span>
-        </div>
-        <div class="info-row">
-          <span class="label">Salary:</span>
-          <span class="value">{{ employee.salary | currency }}</span>
+          <span class="value">{{ emp.email }}</span>
         </div>
       </div>
 
       <div class="card-actions">
-        <button class="btn-icon btn-edit" (click)="editEmployee(employee.id)" title="Edit">
-          Edit
+        <button type="button" class="btn-icon btn-edit" (click)="editEmployee(emp.id)">
+          Edit Profile
         </button>
-        <button class="btn-icon btn-delete" (click)="deleteEmployee(employee.id)" title="Delete">
+        <button type="button" class="btn-icon btn-delete" (click)="deleteEmployee(emp.id)">
           Delete
         </button>
       </div>
+
     </div>
   </div>
-</div>
 
+  <div class="no-data" *ngIf="!loading && (!employees || employees.length === 0)">
+    <p>No active employee records found in the directory.</p>
+  </div>
+
+</div>

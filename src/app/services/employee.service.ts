@@ -1,82 +1,73 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Employee } from '../models/employee.model';
+
+export interface DashboardResponse {
+  totalEmployees: number;
+  totalDepartments: number;
+  latestEmployees: Employee[];
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private employees: Employee[] = [
-    {
-      id: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john.doe@company.com',
-      phone: '555-0101',
-      department: 'Engineering',
-      position: 'Senior Developer',
-      dateOfJoining: '2022-01-15',
-      salary: 95000
-    },
-    {
-      id: 2,
-      firstName: 'Jane',
-      lastName: 'Smith',
-      email: 'jane.smith@company.com',
-      phone: '555-0102',
-      department: 'Marketing',
-      position: 'Marketing Manager',
-      dateOfJoining: '2021-06-20',
-      salary: 75000
-    },
-    {
-      id: 3,
-      firstName: 'Michael',
-      lastName: 'Johnson',
-      email: 'michael.johnson@company.com',
-      phone: '555-0103',
-      department: 'Sales',
-      position: 'Sales Executive',
-      dateOfJoining: '2023-03-10',
-      salary: 65000
-    }
-  ];
 
-  private nextId = 4;
+  private apiUrl = 'http://localhost:5029/api/Employee';
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  getEmployees(): Employee[] {
-    return this.employees;
+  private getHeaders() {
+    const token = localStorage.getItem('token');
+
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
   }
 
-  getEmployeeById(id: number): Employee | undefined {
-    return this.employees.find(emp => emp.id === id);
+  getEmployees(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(
+      this.apiUrl,
+      { headers: this.getHeaders() }
+    );
   }
 
-  addEmployee(employee: Omit<Employee, 'id'>): Employee {
-    const newEmployee: Employee = {
-      id: this.nextId++,
-      ...employee
-    };
-    this.employees.push(newEmployee);
-    return newEmployee;
+  getDashboardData(): Observable<DashboardResponse> {
+    return this.http.get<DashboardResponse>(
+      'http://localhost:5029/api/dashboard',
+      { headers: this.getHeaders() }
+    );
   }
 
-  updateEmployee(id: number, employee: Omit<Employee, 'id'>): Employee | undefined {
-    const index = this.employees.findIndex(emp => emp.id === id);
-    if (index !== -1) {
-      this.employees[index] = { id, ...employee };
-      return this.employees[index];
-    }
-    return undefined;
+  getEmployeeById(id: number): Observable<Employee> {
+  return this.http.get<Employee>(
+    `${this.apiUrl}/${id}`,
+    { headers: this.getHeaders() }
+  );
+}
+
+  addEmployee(employee: any): Observable<any> {
+    return this.http.post(
+      this.apiUrl,
+      employee,
+      { headers: this.getHeaders() }
+    );
   }
 
-  deleteEmployee(id: number): boolean {
-    const index = this.employees.findIndex(emp => emp.id === id);
-    if (index !== -1) {
-      this.employees.splice(index, 1);
-      return true;
-    }
-    return false;
-  }
+  updateEmployee(id: number, employee: Employee): Observable<any> {
+  return this.http.put(
+    `${this.apiUrl}/${id}`,
+    employee,
+    { headers: this.getHeaders() }
+  );
+}
+
+  deleteEmployee(id: number): Observable<any> {
+  return this.http.delete(
+    `${this.apiUrl}/${id}`,
+    { headers: this.getHeaders() }
+  );
+}
 }

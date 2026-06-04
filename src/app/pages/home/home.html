@@ -8,35 +8,75 @@
 
   <div class="home-content">
     <div class="welcome-card">
-      <h1>Dashboard</h1>
-      <p class="welcome-message">Welcome to the Employee Management System</p>
 
-      <!-- Quick Stats -->
+      <h1>Dashboard</h1>
+      <p class="welcome-message">
+        Welcome to the Employee Management System
+      </p>
+
       <div class="stats-grid">
+
         <div class="stat-card">
-          <div class="stat-number">{{ totalEmployees }}</div>
-          <div class="stat-label">Total Employees</div>
+          <div class="stat-number">
+            {{ totalEmployees }}
+          </div>
+          <div class="stat-label">
+            Total Employees
+          </div>
         </div>
+
         <div class="stat-card">
-          <div class="stat-number">{{ totalDepartments }}</div>
-          <div class="stat-label">Departments</div>
+          <div class="stat-number">
+            {{ totalDepartments }}
+          </div>
+          <div class="stat-label">
+            Departments
+          </div>
         </div>
+
       </div>
 
-      <!-- Action Cards -->
+      <section class="recent-employees-card">
+        <div class="section-header">
+          <h2>Latest Employees</h2>
+          <span class="muted-label">{{ latestEmployees.length }} records</span>
+        </div>
+
+        <div *ngIf="latestEmployees.length; else emptyLatestEmployees" class="recent-list">
+          <article class="recent-item" *ngFor="let employee of latestEmployees">
+            <div>
+              <h3>{{ employee.firstName }} {{ employee.lastName }}</h3>
+              <p>{{ employee.position }} • {{ employee.department }}</p>
+            </div>
+            <span class="department-pill">{{ employee.department }}</span>
+          </article>
+        </div>
+
+        <ng-template #emptyLatestEmployees>
+          <p class="empty-state">No recent employees found.</p>
+        </ng-template>
+      </section>
+
       <div class="features-grid">
+
         <div class="feature-card" (click)="viewEmployees()">
           <h3>View Employees</h3>
           <p>Browse and manage all employees</p>
-          <button class="btn btn-primary">View All</button>
+          <button class="btn btn-primary">
+            View All
+          </button>
         </div>
 
         <div class="feature-card" (click)="addEmployee()">
           <h3>Add Employee</h3>
           <p>Add a new employee to the system</p>
-          <button class="btn btn-primary">Add New</button>
+          <button class="btn btn-primary">
+            Add New
+          </button>
         </div>
+
       </div>
+
     </div>
   </div>
 </div>

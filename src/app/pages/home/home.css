@@ -105,6 +105,76 @@
   opacity: 0.9;
 }
 
+.recent-employees-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  font-size: 18px;
+  margin: 0;
+  color: #111827;
+}
+
+.muted-label {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.recent-list {
+  display: grid;
+  gap: 12px;
+}
+
+.recent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: #f9fafb;
+}
+
+.recent-item h3 {
+  margin: 0 0 4px 0;
+  font-size: 15px;
+  color: #111827;
+}
+
+.recent-item p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.department-pill {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.empty-state {
+  color: #6b7280;
+  margin: 0;
+  font-size: 14px;
+}
+
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -189,6 +259,11 @@
 
   .feature-card {
     padding: 24px 16px;
+  }
+
+  .recent-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
