@@ -38,17 +38,50 @@ export class AddEmployee {
   }
 
   onSubmit() {
-    this.submitted = true;
-    if (this.employeeForm.invalid) return;
+  this.submitted = true;
 
-    this.loading = true;
-    setTimeout(() => {
-      this.employeeService.addEmployee(this.employeeForm.value);
-      this.router.navigate(['/view-employee']);
-      this.loading = false;
-    }, 500);
+  if (this.employeeForm.invalid) {
+    return;
   }
 
+  this.loading = true;
+
+  const employeeData = {
+    id: 0,
+    firstName: this.employeeForm.value.firstName,
+    lastName: this.employeeForm.value.lastName,
+    email: this.employeeForm.value.email,
+    phone: this.employeeForm.value.phone,
+    department: this.employeeForm.value.department,
+    position: this.employeeForm.value.position,
+    salary: Number(this.employeeForm.value.salary),
+    dateOfJoining: this.employeeForm.value.dateOfJoining
+  };
+
+  this.employeeService.addEmployee(employeeData)
+    .subscribe({
+      next: (response: any) => {
+
+        alert(response.message || 'Employee Added Successfully');
+
+        this.loading = false;
+
+        this.router.navigate(['/view-employee']);
+      },
+
+      error: (error) => {
+
+        console.error('API Error:', error);
+
+        this.loading = false;
+
+        alert(
+          error.error?.message ||
+          'Failed to add employee'
+        );
+      }
+    });
+}
   goBack() {
     this.router.navigate(['/home']);
   }
