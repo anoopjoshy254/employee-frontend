@@ -1,5 +1,4 @@
-
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Employee } from '../../models/employee.model';
@@ -20,7 +19,8 @@ export class Home implements OnInit {
 
   constructor(
     private router: Router,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -47,10 +47,12 @@ export class Home implements OnInit {
             : [];
 
           console.log('Dashboard Data:', data);
+          this.cdr.detectChanges();
         },
 
         error: (error) => {
           console.error(error);
+          this.cdr.detectChanges();
           alert('Failed to load dashboard data');
         }
       });
